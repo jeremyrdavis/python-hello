@@ -5,7 +5,7 @@ import os
 
 
 def health_check(request):
-    return Response("OK", status=200)
+    return Response(status=200)
 
 def hello_world(request):
     name = os.environ.get('NAME')
