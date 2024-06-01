@@ -2,12 +2,15 @@ from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response
 import os
+import logging
 
 
 def health_check(request):
-    return Response(status=200)
+    logging.info("Health check")
+    return Response("ok", status=200)
 
 def hello_world(request):
+    logging.info("Hello world")
     name = os.environ.get('NAME')
     if name == None or len(name) == 0:
         name = "world"
@@ -15,7 +18,7 @@ def hello_world(request):
     return Response(message)
 
 if __name__ == '__main__':
-    port = 8080
+    port = int(os.environ.get("PORT"))
     with Configurator() as config:
         config.add_route('hello', '/')
         config.add_view(hello_world, route_name='hello')
